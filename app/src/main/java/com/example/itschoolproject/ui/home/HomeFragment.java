@@ -36,7 +36,6 @@ public class HomeFragment extends Fragment {
     static final int GALLERY_REQUEST = 1;
     private FirebaseAuth mAuth;//auth - авторизация
 
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
