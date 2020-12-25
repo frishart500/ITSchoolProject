@@ -21,10 +21,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
 
 public class RegistraitionActivity extends AppCompatActivity {
+    private String USER_KEY = "User";
+
     private Button btnRegistr;
     private ImageView dataImg;
     private EditText editData, email, password, name, phone;
@@ -32,6 +36,7 @@ public class RegistraitionActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;//auth - авторизация
     private ProgressDialog mLoadingBar;
     private ImageView back;
+    private DatabaseReference mDataBase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +92,7 @@ public class RegistraitionActivity extends AppCompatActivity {
         btnRegistr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                funk();
+                funk(email.getText().toString().trim(), password.getText().toString().trim());
             }
         });
         back.setOnClickListener(new View.OnClickListener() {
@@ -110,10 +115,11 @@ public class RegistraitionActivity extends AppCompatActivity {
         password = findViewById(R.id.password);
         email = findViewById(R.id.email);
         mAuth = FirebaseAuth.getInstance();
+        mDataBase = FirebaseDatabase.getInstance().getReference(USER_KEY);
         mLoadingBar = new ProgressDialog(RegistraitionActivity.this);
     }
 
-    private void funk(){
+    private void funk(final String emailForString, String passwordForString){
 
         final String dataS = editData.getText().toString();
         final String nameS = name.getText().toString();
@@ -140,11 +146,14 @@ public class RegistraitionActivity extends AppCompatActivity {
             mLoadingBar.setCanceledOnTouchOutside(false);
             mLoadingBar.show();
 
-            mAuth.createUserWithEmailAndPassword(emailS, passwordS).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            mAuth.createUserWithEmailAndPassword(emailForString, passwordForString).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){//если пользователь смог зарегаться то
                         Toast.makeText(RegistraitionActivity.this, "Регистрация успешна!", Toast.LENGTH_SHORT).show();
+
+                        User user = new User(dataS, emailForString, nameS, phoneS);
+                        mDataBase.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user);
 
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intent);
