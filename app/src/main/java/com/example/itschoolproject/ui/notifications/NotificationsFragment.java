@@ -11,25 +11,40 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.itschoolproject.Adapter;
+import com.example.itschoolproject.Item;
 import com.example.itschoolproject.R;
+
+import java.util.ArrayList;
 
 public class NotificationsFragment extends Fragment {
 
-    private NotificationsViewModel notificationsViewModel;
+    private RecyclerView recyclerView;
+    private Adapter adapter;
+    private ArrayList<Item> parseItems = new ArrayList<>();
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        notificationsViewModel =
-                ViewModelProviders.of(this).get(NotificationsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_notifications, container, false);
-        final TextView textView = root.findViewById(R.id.text_notifications);
-        notificationsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+
+        recyclerView = root.findViewById(R.id.rv);
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        parseItems.add(new Item(R.mipmap.ic_launcher ,"Иван Иванович", "Химия"));
+        parseItems.add(new Item(R.mipmap.ic_launcher ,"Иван Иванович", "Химия"));
+        parseItems.add(new Item(R.mipmap.ic_launcher ,"Иван Иванович", "Химия"));
+        parseItems.add(new Item(R.mipmap.ic_launcher ,"Иван Иванович", "Химия"));
+        parseItems.add(new Item(R.mipmap.ic_launcher ,"Иван Иванович", "Химия"));
+        parseItems.add(new Item(R.mipmap.ic_launcher ,"Иван Иванович", "Химия"));
+
+        adapter = new Adapter(parseItems, getContext());
+        recyclerView.setAdapter(adapter);
+
+
         return root;
     }
 }

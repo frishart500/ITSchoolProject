@@ -19,10 +19,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
+//import com.google.android.gms.auth.api.Auth;
+//import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+//import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
@@ -48,18 +48,18 @@ public class LoginActivity extends AppCompatActivity {
     private int RC_SIGN_IN = 1;
 
     private SignInButton signInButton;
-    GoogleSignInClient mGoogleSignInClient;
+   // GoogleSignInClient mGoogleSignInClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_main);
         init();
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+      //  GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+      //          .requestIdToken(getString(R.string.default_web_client_id))
+      //          .requestEmail()
+      //          .build();
+      //  mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
 
 
@@ -101,17 +101,17 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        signInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-                startActivityForResult(signInIntent, RC_SIGN_IN);
+       // signInButton.setOnClickListener(new View.OnClickListener() {
+       //     @Override
+       //     public void onClick(View v) {
+       //         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        //         startActivityForResult(signInIntent, RC_SIGN_IN);
 
-            }
-        });
+          //  }
+        //});
     }
 
-    @Override
+   /* @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RC_SIGN_IN){
@@ -162,14 +162,14 @@ public class LoginActivity extends AppCompatActivity {
 
             Toast.makeText(this, name  + email, Toast.LENGTH_SHORT).show();
         }
-    }
+    }*/
 
     private void init(){
         forgetPassword = findViewById(R.id.forgetPassword);
         btnEnter = findViewById(R.id.enterBtn);
         textForgetPass = findViewById(R.id.forgetPassword);
         textRegistraition = findViewById(R.id.registration);
-        signInButton = findViewById(R.id.signInBtn);
+      //  signInButton = findViewById(R.id.signInBtn);
 
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);

@@ -2,6 +2,7 @@ package com.example.itschoolproject;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
@@ -11,6 +12,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -29,9 +32,11 @@ import java.util.Calendar;
 public class RegistraitionActivity extends AppCompatActivity {
     private String USER_KEY = "User";
 
+    private CheckBox checkStudent, checkExpert;
+    private ConstraintLayout cs;
     private Button btnRegistr;
     private ImageView dataImg;
-    private EditText editData, email, password, name, phone;
+    private EditText editData, email, password, name, phone, expertEdit;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private FirebaseAuth mAuth;//auth - авторизация
     private ProgressDialog mLoadingBar;
@@ -45,6 +50,39 @@ public class RegistraitionActivity extends AppCompatActivity {
         init();
         OnClickListenerBTNs();
 
+        checkExpert.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (checkExpert.isChecked()) {
+                    checkStudent.setChecked(false);
+                    cs.setVisibility(View.VISIBLE);
+                    expertEdit.setVisibility(View.VISIBLE);
+                }
+             else if (!checkExpert.isChecked()){
+                    checkExpert.setChecked(false);
+                    cs.setVisibility(View.INVISIBLE);
+                    expertEdit.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+
+        checkStudent.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (checkStudent.isChecked()) {
+                    checkExpert.setChecked(false);
+                    cs.setVisibility(View.INVISIBLE);
+                    expertEdit.setVisibility(View.INVISIBLE);
+                }
+                else if (!checkStudent.isChecked()){
+                    checkStudent.setChecked(false);
+                    cs.setVisibility(View.VISIBLE);
+                    expertEdit.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
         mDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -107,7 +145,12 @@ public class RegistraitionActivity extends AppCompatActivity {
         btnRegistr = findViewById(R.id.registrBtn);
         dataImg = findViewById(R.id.dataImg);
 
+        cs = findViewById(R.id.cs);
+
         back = findViewById(R.id.back);
+        checkStudent = findViewById(R.id.studentCheck);
+        checkExpert = findViewById(R.id.ExpertCheck);
+        expertEdit = findViewById(R.id.subject);
 
         editData = findViewById(R.id.editData);
         name = findViewById(R.id.nameEditText);

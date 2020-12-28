@@ -19,7 +19,12 @@
     <string name="registr">Регистрация</string>
     <string name="redact">Изменение профиля</string>
     <string name="name">Имя</string>
-    <string name="nameOfBuy">Введите название списка</string>
+    <string name="nameOfBuy">Сообщение</string>
     <string name="enterWith">Войти с помощью:</string>
+    <string name="chat">Чат</string>
+    <string name="listOfUsers">Список экспертов</string>
+    <string name="expert">Эксперт</string>
+    <string name="student">Ученик</string>
+    <string name="subject">Введите предмет</string>
 
 </resources>
